@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivityEditarRefeicaoDia">
+
+    <TextView
+        android:id="@+id/textDiaSemanaEditar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"/>
+
+    <Button
+        android:id="@+id/btnVerAlimentos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:backgroundTint="#DA7735"
+        android:text="Alimentos"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:cornerRadius="0px"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ExpandableListView
+        android:id="@+id/expandableListViewRefeicoesEditar"
+        android:layout_width="match_parent"
+        android:layout_height="516dp"
+        android:layout_margin="30dp"
+        android:layout_marginTop="30dp"
+        android:divider="@android:color/white"
+        android:dividerHeight="20dp"
+        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnVerAlimentos" />
+
+
+    <TableLayout
+        android:id="@+id/tableLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/btnCancelarDia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_weight="1"
+                android:background="@null"
+                app:srcCompat="@drawable/close_circle_outline"
+                tools:layout_editor_absoluteX="244dp"
+                tools:layout_editor_absoluteY="626dp" />
+
+            <ImageButton
+                android:id="@+id/btnSalvarDia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_weight="1"
+                android:background="@null"
+                app:srcCompat="@drawable/checkmark_circle_outline"
+                tools:layout_editor_absoluteX="244dp"
+                tools:layout_editor_absoluteY="626dp" />
+
+        </TableRow>
+
+    </TableLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

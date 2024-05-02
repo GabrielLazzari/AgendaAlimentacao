@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/textNomeAlimento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="28dp"
+        android:text="Nome"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/textCaloriasAlimento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="28dp"
+        android:layout_marginEnd="32dp"
+        android:text="Calorias"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="#000000"/>
+
+    <Button
+        android:id="@+id/butSugestaoSubstituicao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:backgroundTint="#fff"
+        android:text="Sugestões de Substituição"
+        android:textColor="#DA7735"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/textNomeAlimento"
+        app:layout_constraintTop_toBottomOf="@+id/textNomeAlimento" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

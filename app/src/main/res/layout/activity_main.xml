@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textoDataAtual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="21dp"
+        android:text="dd/mm/aaaa"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="15dp"
+        android:layout_margin="15dp"/>
+
+    <Button
+        android:id="@+id/btnDataAtual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_margin="15dp"
+        android:layout_marginEnd="0dp"
+        android:backgroundTint="#B8B6B7"
+        android:text="Hoje"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:cornerRadius="0px"
+        app:strokeWidth="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/textoDataAtual"
+        tools:layout_editor_absoluteX="1dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btnDiaSemana1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#DA7735"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingEnd="20dp"
+                android:text="1"
+                android:textColor="#000000"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnDiaSemana2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#fff"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingEnd="20dp"
+                android:text="2"
+                android:textColor="#000000"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnDiaSemana3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#fff"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingEnd="20dp"
+                android:text="3"
+                android:textColor="#000000"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnDiaSemana4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#fff"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingEnd="20dp"
+                android:text="4"
+                android:textColor="#000000"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnDiaSemana5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#fff"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingEnd="20dp"
+                android:text="5"
+                android:textColor="#000000"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnDiaSemana6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#fff"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingEnd="20dp"
+                android:text="6"
+                android:textColor="#000000"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnDiaSemana7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#fff"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingEnd="20dp"
+                android:text="7"
+                android:textColor="#000000"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <ExpandableListView
+        android:id="@+id/expandableListViewRefeicoes"
+        android:layout_width="match_parent"
+        android:layout_height="516dp"
+        android:layout_margin="30dp"
+        android:layout_marginTop="30dp"
+        android:divider="@android:color/white"
+        android:dividerHeight="20dp"
+        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+
+    <TableLayout
+        android:id="@+id/tableLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#DA7735"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/btnExportarRelatorio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_weight="1"
+                android:background="@null"
+                app:srcCompat="@drawable/download_outline"
+                tools:layout_editor_absoluteX="244dp"
+                tools:layout_editor_absoluteY="626dp" />
+
+            <ImageButton
+                android:id="@+id/btnEditarListaAlimentacao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_weight="1"
+                android:background="@null"
+                app:srcCompat="@drawable/create_outline"
+                tools:layout_editor_absoluteX="244dp"
+                tools:layout_editor_absoluteY="626dp" />
+
+        </TableRow>
+
+    </TableLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragmentSugestao">
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
