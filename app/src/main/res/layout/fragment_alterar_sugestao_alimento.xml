@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#BF474747"
-    tools:context=".FragmentAlterarSugestaoAlimento">
+    tools:context=".FragmentAlterarSugestaoAlimento"
+    android:clickable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

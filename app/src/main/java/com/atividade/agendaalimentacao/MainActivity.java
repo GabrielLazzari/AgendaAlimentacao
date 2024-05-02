@@ -229,9 +229,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void AbrirSugestaoAlimentos(List<Alimento> alimentosSugeridos){
         //System.out.println(numero);
-        FragmentAlterarSugestaoAlimento birdImageFragment = new FragmentAlterarSugestaoAlimento(alimentosSugeridos);
+        FragmentAlterarSugestaoAlimento fragmentAlterarSugestaoAlimento = new FragmentAlterarSugestaoAlimento(alimentosSugeridos);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentSugestao, birdImageFragment);
+        transaction.replace(R.id.fragmentSugestao, fragmentAlterarSugestaoAlimento);
         transaction.addToBackStack(null);
         transaction.commit();
     }
