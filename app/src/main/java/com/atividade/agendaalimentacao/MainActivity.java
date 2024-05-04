@@ -33,19 +33,22 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Controle para as datas
     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     Date date = new Date();
     Calendar cal = Calendar.getInstance();
 
+    // Dias
     int DiaSelecionado = -1;
+    public List<Dia> diasSemana = new ArrayList<Dia>();
 
     Button btnDia1; Button btnDia2; Button btnDia3; Button btnDia4; Button btnDia5;
     Button btnDia6; Button btnDia7; Button btnDataAtual; ImageButton btnEditarListaAlimentacao;
-
     ArrayList<Button> botoesDia;
 
     ExpandableListView expandableListViewRefeicoes;
     ExpandableListAdapter expandableListAdapter;
+    MainActivity_RefeicaoAdapter mainActivityRefeicaoAdapter = null;
     List<String> expandableListTitulo = new ArrayList<String>();
     HashMap<String,List<Alimento>> expandableListItems;
 
@@ -87,10 +90,13 @@ public class MainActivity extends AppCompatActivity {
         TextView textoDataAtual = findViewById(R.id.textoDataAtual);
         textoDataAtual.setText(dateFormat.format(date));
 
-        DefinirListenerPosicaoDia();
+        DefinirListeners();
         AlterarPosicaoDia(DiaSelecionado, DiaSelecionado);
 
 
+        for (int c=0; c<7; c++){
+            this.diasSemana.add(this.RetornarDia());
+        }
 
         Dia dia = this.RetornarDia();
 
@@ -98,21 +104,16 @@ public class MainActivity extends AppCompatActivity {
 
         expandableListViewRefeicoes = findViewById(R.id.expandableListViewRefeicoes);
 
-        //expandableListDetail = this.getData();
-
         expandableListTitulo = new ArrayList<>(expandableListItems.keySet());
 
-        expandableListAdapter = new MainActivity_RefeicaoAdapter
-                (this, expandableListTitulo, expandableListItems);
+        mainActivityRefeicaoAdapter = new MainActivity_RefeicaoAdapter
+                (this, expandableListTitulo, expandableListItems, DiaSelecionado);
+        expandableListAdapter = mainActivityRefeicaoAdapter;
 
         expandableListViewRefeicoes.setAdapter(expandableListAdapter);
     }
 
-    public void EditarDia(int dia){
-
-    }
-
-    public void DefinirListenerPosicaoDia(){
+    public void DefinirListeners(){
         int dia = 1;
         for(Button botao : botoesDia){
             int finalDia = dia;
@@ -120,6 +121,9 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     AlterarPosicaoDia(finalDia, cal.get(Calendar.DAY_OF_WEEK));
+                    if (mainActivityRefeicaoAdapter != null){
+                        mainActivityRefeicaoAdapter.AtualizarDiaSemana(finalDia);
+                    }
                 }
             });
 
@@ -130,6 +134,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlterarPosicaoDia(cal.get(Calendar.DAY_OF_WEEK), cal.get(Calendar.DAY_OF_WEEK));
+                if (mainActivityRefeicaoAdapter != null){
+                    mainActivityRefeicaoAdapter.AtualizarDiaSemana(cal.get(Calendar.DAY_OF_WEEK));
+                }
             }
         });
 
@@ -164,10 +171,10 @@ public class MainActivity extends AppCompatActivity {
 
     public Dia RetornarDia(){
         Alimento alimento1 = new Alimento(1, "Teste", "100kcal");
-        Alimento alimento2 = new Alimento(1, "Teste2", "200kcal");
-        Alimento alimento3 = new Alimento(1, "Teste3", "150kcal");
-        Alimento alimento4 = new Alimento(1, "Teste4", "500kcal");
-        Alimento alimento5 = new Alimento(1, "Teste5", "170kcal");
+        Alimento alimento2 = new Alimento(2, "Teste2", "200kcal");
+        Alimento alimento3 = new Alimento(3, "Teste3", "150kcal");
+        Alimento alimento4 = new Alimento(4, "Teste4", "500kcal");
+        Alimento alimento5 = new Alimento(5, "Teste5", "170kcal");
 
         Refeicao refeicao1 = new Refeicao(1, "Café", new ArrayList<Alimento>(Arrays.asList(
                 alimento1, alimento2
@@ -194,42 +201,8 @@ public class MainActivity extends AppCompatActivity {
         return dia;
     }
 
-    public static HashMap<String, List<String>> getData(){
-
-        HashMap<String, List<String>> expandableListDetail = new HashMap<>();
-
-        List<String> cricket = new ArrayList<>();
-        cricket.add("India");
-        cricket.add("Pakistan");
-        cricket.add("Australia");
-        cricket.add("Viet Nam");
-        cricket.add("South Africa");
-
-        List<String> football = new ArrayList<>();
-        football.add("Brazil");
-        football.add("Spain");
-        football.add("Germany");
-        football.add("Netherlands");
-        football.add("Italy");
-
-        List<String> basketball = new ArrayList<>();
-        basketball.add("United States");
-        basketball.add("Spain");
-        basketball.add("Argentina");
-        basketball.add("France");
-        basketball.add("Russia");
-
-        expandableListDetail.put("CRICKET TEAMS",cricket);
-        expandableListDetail.put("FOOTBALL TEAMS",football);
-        expandableListDetail.put("BASKETBALL TEAMS",basketball);
-
-        return expandableListDetail;
-
-    }
-
-    public void AbrirSugestaoAlimentos(List<Alimento> alimentosSugeridos){
-        //System.out.println(numero);
-        FragmentAlterarSugestaoAlimento fragmentAlterarSugestaoAlimento = new FragmentAlterarSugestaoAlimento(alimentosSugeridos);
+    public void AbrirSugestaoAlimentos(List<Alimento> alimentosSugeridos, String tituloRefeicao, int dia){
+        FragmentAlterarSugestaoAlimento fragmentAlterarSugestaoAlimento = new FragmentAlterarSugestaoAlimento(alimentosSugeridos, tituloRefeicao, dia);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentSugestao, fragmentAlterarSugestaoAlimento);
         transaction.addToBackStack(null);
@@ -239,5 +212,15 @@ public class MainActivity extends AppCompatActivity {
     public void FecharSugestaoAlimentos(View v){
         System.out.println("Fechou");
         getSupportFragmentManager().popBackStack();
+    }
+
+    public static void AlterarSugestaoAlimento(Alimento alimento, String tituloRefeicao, int dia){
+        System.out.println("Trocou");
+        System.out.println(tituloRefeicao);
+        System.out.println(dia);
+        System.out.println(alimento.Nome);
+        //Dia diaAux = this.diasSemana.get(dia);
+
+        //getSupportFragmentManager().popBackStack();
     }
 }

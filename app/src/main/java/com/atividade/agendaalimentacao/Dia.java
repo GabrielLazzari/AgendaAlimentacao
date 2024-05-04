@@ -10,9 +10,7 @@ public class Dia {
     int DiaSemana;
     List<Refeicao> ListaRefeicoes;
 
-    Dia(){
-
-    }
+    Dia(){}
 
     Dia(int diaSemana, List<Refeicao> listaRefeicoes){
         this.DiaSemana = diaSemana;
@@ -42,7 +40,7 @@ public class Dia {
         Refeicao lancheNoite = new Refeicao(1, "Lanche da Noite", new ArrayList<Alimento>());
 
         Alimento alimento1 = new Alimento(1, "Teste", "100kcal");
-        Alimento alimento2 = new Alimento(1, "Teste2", "200kcal");
+        Alimento alimento2 = new Alimento(2, "Teste2", "200kcal");
         List<Alimento> listaSugestoes = new ArrayList<Alimento>(Arrays.asList(
                 alimento1, alimento2
         ));
@@ -54,7 +52,7 @@ public class Dia {
 
         for (int c=0; c<dia.ListaRefeicoes.size(); c++){
             if (dia.ListaRefeicoes.get(c).Refeicao == "Café"){
-                //cafe.ListaAlimentos = dia.ListaRefeicoes.get(c).ListaAlimentos;
+                cafe.ListaAlimentos = dia.ListaRefeicoes.get(c).ListaAlimentos;
             }else if (dia.ListaRefeicoes.get(c).Refeicao == "Lanche da Manhã"){
                 lancheManha.ListaAlimentos = dia.ListaRefeicoes.get(c).ListaAlimentos;
             }else if (dia.ListaRefeicoes.get(c).Refeicao == "Almoço"){

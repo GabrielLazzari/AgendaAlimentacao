@@ -12,12 +12,16 @@ import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentAlterarSugestaoAlimento_ItemAdapter  extends RecyclerView.Adapter<FragmentAlterarSugestaoAlimento_ItemAdapter.Activity_RecyclerView_Item> {
+public class FragmentAlterarSugestaoAlimento_ItemAdapter extends RecyclerView.Adapter<FragmentAlterarSugestaoAlimento_ItemAdapter.Activity_RecyclerView_Item> {
 
     List<Alimento> listaAlimentosSugestao = new ArrayList<Alimento>();
+    String TituloRefeicao = "";
+    int Dia = 0;
 
-    public FragmentAlterarSugestaoAlimento_ItemAdapter(List<Alimento> alimentosSugestao) {
+    public FragmentAlterarSugestaoAlimento_ItemAdapter(List<Alimento> alimentosSugestao, String tituloRefeicao, int dia) {
         this.listaAlimentosSugestao = alimentosSugestao;
+        this.TituloRefeicao = tituloRefeicao;
+        this.Dia = dia;
     }
 
     @Override
@@ -32,26 +36,26 @@ public class FragmentAlterarSugestaoAlimento_ItemAdapter  extends RecyclerView.A
     @Override
     public void onBindViewHolder(Activity_RecyclerView_Item itemView, int i) {
 
-        Alimento item = this.listaAlimentosSugestao.get(i);
-        itemView.textNomeItemAlterar.setText(item.Nome);
-        itemView.textCaloriasItemAlterar.setText(item.Calorias);
+        Alimento alimento = this.listaAlimentosSugestao.get(i);
+        itemView.textNomeItemAlterar.setText(alimento.Nome);
+        itemView.textCaloriasItemAlterar.setText(alimento.Calorias);
 
-        itemView.btnAlterarAlimento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        //itemView.btnAlterarAlimento.setOnClickListener(new View.OnClickListener() {
+            //@Override
+            //public void onClick(View view) {
                 //listaAlimentosSugestao.remove(i);
                 //notifyDataSetChanged();
-            }
-        });
 
-        /*itemView.btnExcluir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listaAlimentosSugestao.remove(i);
-                notifyDataSetChanged();
-            }
-        });*/
 
+                // Quando formos implementar as logicas, tem que fazer isso salvar no banco
+                // depois fechar o fragment
+                // e por fim atualizar a tela principal
+                // ja que nao esta sendo possivel atualizar por conta do conflito com o metodo estatico
+
+                //MainActivity.AlterarSugestaoAlimento(alimento, TituloRefeicao, Dia);
+
+            //}
+        //});
     }
 
     @Override

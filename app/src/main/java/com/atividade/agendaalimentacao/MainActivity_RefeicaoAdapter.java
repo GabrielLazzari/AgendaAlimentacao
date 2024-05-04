@@ -23,11 +23,17 @@ public class MainActivity_RefeicaoAdapter extends BaseExpandableListAdapter {
     private Context mContext;
     private List<String> expandableListTitle;
     private HashMap<String, List<Alimento>> expandableListDetail;
+    int Dia = 0;
 
-    public MainActivity_RefeicaoAdapter(Context mContext, List<String> expandableListTitle, HashMap<String, List<Alimento>> expandableListDetail) {
+    public MainActivity_RefeicaoAdapter(Context mContext, List<String> expandableListTitle, HashMap<String, List<Alimento>> expandableListDetail, int dia) {
         this.mContext = mContext;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
+        this.Dia = dia;
+    }
+
+    public void AtualizarDiaSemana(int diaAtualizado){
+        this.Dia = diaAtualizado;
     }
 
     @Override
@@ -67,7 +73,7 @@ public class MainActivity_RefeicaoAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        String listTitle = (String) getGroup(groupPosition);
+        String tituloRefeicao = (String) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater)
                     this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -75,20 +81,21 @@ public class MainActivity_RefeicaoAdapter extends BaseExpandableListAdapter {
         }
 
         TextView textTituloRefeicao = convertView.findViewById(R.id.textTituloRefeicao);
-        textTituloRefeicao.setText(listTitle);
+        textTituloRefeicao.setText(tituloRefeicao);
         return convertView;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
+        String tituloRefeicao = (String) getGroup(groupPosition);
         Alimento alimento = (Alimento) getChild(groupPosition, childPosition);
+
         if (convertView == null) {
 
             LayoutInflater inflater = (LayoutInflater)
                     this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.activity_main_refeicao_alimento_item, null);
-
         }
 
         TextView expandedListTextView  = convertView.findViewById(R.id.textNomeAlimento);
@@ -111,9 +118,10 @@ public class MainActivity_RefeicaoAdapter extends BaseExpandableListAdapter {
                         alimento1, alimento2
                 ));
                 alimento.ListaSugestoes = listaSugestoes;
-                ((MainActivity)mContext).AbrirSugestaoAlimentos(alimento.ListaSugestoes);
+                ((MainActivity)mContext).AbrirSugestaoAlimentos(alimento.ListaSugestoes, tituloRefeicao, Dia);
             }
         });
+
         if (alimento.ListaSugestoes.size() == 0){
             butSugestaoSubstituicao.setVisibility(butSugestaoSubstituicao.GONE);
         }else{

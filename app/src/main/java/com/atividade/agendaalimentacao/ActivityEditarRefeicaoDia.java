@@ -29,11 +29,10 @@ public class ActivityEditarRefeicaoDia extends AppCompatActivity {
     Date date = new Date();
     Calendar cal = Calendar.getInstance();
 
-    ImageButton btnCancelarDia; ImageButton btnSalvarDia;
-
     int DiaSelecionado = -1;
-
     Dia dia = new Dia();
+
+    ImageButton btnCancelarDia; ImageButton btnSalvarDia;
 
     ExpandableListView expandableListViewRefeicoesEditar;
     ExpandableListAdapter expandableListAdapterEditar;
