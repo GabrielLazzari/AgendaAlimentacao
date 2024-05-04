@@ -1,0 +1,7 @@
+<resources>
+    <string-array name="nomes_alimentos">
+        <item>Alimento 1</item>
+        <item>Alimento 2</item>
+        <item>Alimento 3</item>
+    </string-array>
+</resources>

@@ -17,34 +17,34 @@ public class Dia {
         this.ListaRefeicoes = listaRefeicoes;
     }
 
-    public static HashMap<String, List<Alimento>> ConverterDiaParaHasMap(Dia dia){
-        HashMap<String, List<Alimento>> expandableListDetail = new HashMap<>();
+    public static HashMap<String, List<AlimentoModel>> ConverterDiaParaHasMap(Dia dia){
+        HashMap<String, List<AlimentoModel>> expandableListDetail = new HashMap<>();
 
         if (dia.ListaRefeicoes == null){
             dia.ListaRefeicoes = new ArrayList<Refeicao>();
         }
 
         for (int c=0; c<dia.ListaRefeicoes.size(); c++){
-            expandableListDetail.put(dia.ListaRefeicoes.get(c).Refeicao, dia.ListaRefeicoes.get(c).ListaAlimentos);
+            expandableListDetail.put(dia.ListaRefeicoes.get(c).Refeicao, dia.ListaRefeicoes.get(c).listaAlimentoModels);
         }
 
         return expandableListDetail;
     }
 
     public static Dia RetornarRefeicoesVazias(Dia dia, int diaSemana){
-        Refeicao cafe = new Refeicao(1, "Café", new ArrayList<Alimento>());
-        Refeicao lancheManha = new Refeicao(1, "Lanche da Manhã", new ArrayList<Alimento>());
-        Refeicao almoco = new Refeicao(1, "Almoço", new ArrayList<Alimento>());
-        Refeicao lancheTarde = new Refeicao(1, "Lanche da Tarde", new ArrayList<Alimento>());
-        Refeicao jantar = new Refeicao(1, "Jantar", new ArrayList<Alimento>());
-        Refeicao lancheNoite = new Refeicao(1, "Lanche da Noite", new ArrayList<Alimento>());
+        Refeicao cafe = new Refeicao(1, "Café", new ArrayList<AlimentoModel>());
+        Refeicao lancheManha = new Refeicao(1, "Lanche da Manhã", new ArrayList<AlimentoModel>());
+        Refeicao almoco = new Refeicao(1, "Almoço", new ArrayList<AlimentoModel>());
+        Refeicao lancheTarde = new Refeicao(1, "Lanche da Tarde", new ArrayList<AlimentoModel>());
+        Refeicao jantar = new Refeicao(1, "Jantar", new ArrayList<AlimentoModel>());
+        Refeicao lancheNoite = new Refeicao(1, "Lanche da Noite", new ArrayList<AlimentoModel>());
 
-        Alimento alimento1 = new Alimento(1, "Teste", "100kcal");
-        Alimento alimento2 = new Alimento(2, "Teste2", "200kcal");
-        List<Alimento> listaSugestoes = new ArrayList<Alimento>(Arrays.asList(
-                alimento1, alimento2
+        AlimentoModel alimentoModel1 = new AlimentoModel(1, "Teste", "100kcal");
+        AlimentoModel alimentoModel2 = new AlimentoModel(2, "Teste2", "200kcal");
+        List<AlimentoModel> listaSugestoes = new ArrayList<AlimentoModel>(Arrays.asList(
+                alimentoModel1, alimentoModel2
         ));
-        cafe.ListaAlimentos = listaSugestoes;
+        cafe.listaAlimentoModels = listaSugestoes;
 
         if (dia.ListaRefeicoes == null){
             dia.ListaRefeicoes = new ArrayList<Refeicao>();
@@ -52,17 +52,17 @@ public class Dia {
 
         for (int c=0; c<dia.ListaRefeicoes.size(); c++){
             if (dia.ListaRefeicoes.get(c).Refeicao == "Café"){
-                cafe.ListaAlimentos = dia.ListaRefeicoes.get(c).ListaAlimentos;
+                cafe.listaAlimentoModels = dia.ListaRefeicoes.get(c).listaAlimentoModels;
             }else if (dia.ListaRefeicoes.get(c).Refeicao == "Lanche da Manhã"){
-                lancheManha.ListaAlimentos = dia.ListaRefeicoes.get(c).ListaAlimentos;
+                lancheManha.listaAlimentoModels = dia.ListaRefeicoes.get(c).listaAlimentoModels;
             }else if (dia.ListaRefeicoes.get(c).Refeicao == "Almoço"){
-                almoco.ListaAlimentos = dia.ListaRefeicoes.get(c).ListaAlimentos;
+                almoco.listaAlimentoModels = dia.ListaRefeicoes.get(c).listaAlimentoModels;
             }else if (dia.ListaRefeicoes.get(c).Refeicao == "Lanche da Tarde"){
-                lancheTarde.ListaAlimentos = dia.ListaRefeicoes.get(c).ListaAlimentos;
+                lancheTarde.listaAlimentoModels = dia.ListaRefeicoes.get(c).listaAlimentoModels;
             }else if (dia.ListaRefeicoes.get(c).Refeicao == "Jantar"){
-                jantar.ListaAlimentos = dia.ListaRefeicoes.get(c).ListaAlimentos;
+                jantar.listaAlimentoModels = dia.ListaRefeicoes.get(c).listaAlimentoModels;
             }else if (dia.ListaRefeicoes.get(c).Refeicao == "Lanche da Noite"){
-                lancheNoite.ListaAlimentos = dia.ListaRefeicoes.get(c).ListaAlimentos;
+                lancheNoite.listaAlimentoModels = dia.ListaRefeicoes.get(c).listaAlimentoModels;
             }
         }
 

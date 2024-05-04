@@ -190,7 +190,8 @@
                 android:background="@null"
                 app:srcCompat="@drawable/download_outline"
                 tools:layout_editor_absoluteX="244dp"
-                tools:layout_editor_absoluteY="626dp" />
+                tools:layout_editor_absoluteY="626dp"
+                android:onClick="AbrirRelatorios"/>
 
             <ImageButton
                 android:id="@+id/btnEditarListaAlimentacao"

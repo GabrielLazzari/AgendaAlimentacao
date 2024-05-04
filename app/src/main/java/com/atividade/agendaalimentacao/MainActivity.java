@@ -2,11 +2,6 @@ package com.atividade.agendaalimentacao;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -50,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     ExpandableListAdapter expandableListAdapter;
     MainActivity_RefeicaoAdapter mainActivityRefeicaoAdapter = null;
     List<String> expandableListTitulo = new ArrayList<String>();
-    HashMap<String,List<Alimento>> expandableListItems;
+    HashMap<String,List<AlimentoModel>> expandableListItems;
 
 
     @Override
@@ -170,28 +165,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public Dia RetornarDia(){
-        Alimento alimento1 = new Alimento(1, "Teste", "100kcal");
-        Alimento alimento2 = new Alimento(2, "Teste2", "200kcal");
-        Alimento alimento3 = new Alimento(3, "Teste3", "150kcal");
-        Alimento alimento4 = new Alimento(4, "Teste4", "500kcal");
-        Alimento alimento5 = new Alimento(5, "Teste5", "170kcal");
+        AlimentoModel alimentoModel1 = new AlimentoModel(1, "Teste", "100kcal");
+        AlimentoModel alimentoModel2 = new AlimentoModel(2, "Teste2", "200kcal");
+        AlimentoModel alimentoModel3 = new AlimentoModel(3, "Teste3", "150kcal");
+        AlimentoModel alimentoModel4 = new AlimentoModel(4, "Teste4", "500kcal");
+        AlimentoModel alimentoModel5 = new AlimentoModel(5, "Teste5", "170kcal");
 
-        Refeicao refeicao1 = new Refeicao(1, "Café", new ArrayList<Alimento>(Arrays.asList(
-                alimento1, alimento2
+        Refeicao refeicao1 = new Refeicao(1, "Café", new ArrayList<AlimentoModel>(Arrays.asList(
+                alimentoModel1, alimentoModel2
         )));
 
-        Refeicao refeicao2 = new Refeicao(1, "Almoço", new ArrayList<Alimento>(Arrays.asList(
-                alimento3
+        Refeicao refeicao2 = new Refeicao(1, "Almoço", new ArrayList<AlimentoModel>(Arrays.asList(
+                alimentoModel3
         )));
 
-        List<Alimento> listaSugestoes = new ArrayList<Alimento>(Arrays.asList(
-                alimento1, alimento3
+        List<AlimentoModel> listaSugestoes = new ArrayList<AlimentoModel>(Arrays.asList(
+                alimentoModel1, alimentoModel3
         ));
 
-        alimento4.setListaSugestoes(listaSugestoes);
+        alimentoModel4.setListaSugestoes(listaSugestoes);
 
-        Refeicao refeicao3 = new Refeicao(1, "Jantar", new ArrayList<Alimento>(Arrays.asList(
-                alimento4, alimento5
+        Refeicao refeicao3 = new Refeicao(1, "Jantar", new ArrayList<AlimentoModel>(Arrays.asList(
+                alimentoModel4, alimentoModel5
         )));
 
         Dia dia = new Dia(1, new ArrayList<Refeicao>(Arrays.asList(
@@ -201,7 +196,13 @@ public class MainActivity extends AppCompatActivity {
         return dia;
     }
 
-    public void AbrirSugestaoAlimentos(List<Alimento> alimentosSugeridos, String tituloRefeicao, int dia){
+    public void AbrirRelatorios(View v){
+        Intent relatorios = new Intent(MainActivity.this, RelatorioActivity.class);
+        relatorios.putExtra("DiaSelecionado", DiaSelecionado);
+        startActivity(relatorios);
+    }
+
+    public void AbrirSugestaoAlimentos(List<AlimentoModel> alimentosSugeridos, String tituloRefeicao, int dia){
         FragmentAlterarSugestaoAlimento fragmentAlterarSugestaoAlimento = new FragmentAlterarSugestaoAlimento(alimentosSugeridos, tituloRefeicao, dia);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentSugestao, fragmentAlterarSugestaoAlimento);
@@ -214,11 +215,11 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().popBackStack();
     }
 
-    public static void AlterarSugestaoAlimento(Alimento alimento, String tituloRefeicao, int dia){
+    public static void AlterarSugestaoAlimento(AlimentoModel alimentoModel, String tituloRefeicao, int dia){
         System.out.println("Trocou");
         System.out.println(tituloRefeicao);
         System.out.println(dia);
-        System.out.println(alimento.Nome);
+        System.out.println(alimentoModel.Nome);
         //Dia diaAux = this.diasSemana.get(dia);
 
         //getSupportFragmentManager().popBackStack();

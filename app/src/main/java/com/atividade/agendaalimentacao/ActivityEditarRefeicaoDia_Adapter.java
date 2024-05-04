@@ -4,27 +4,19 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 public class ActivityEditarRefeicaoDia_Adapter extends BaseExpandableListAdapter {
     private Context mContext;
     private List<String> expandableListTitle;
-    private HashMap<String, List<Alimento>> expandableListDetail;
+    private HashMap<String, List<AlimentoModel>> expandableListDetail;
 
-    public ActivityEditarRefeicaoDia_Adapter(Context mContext, List<String> expandableListTitle, HashMap<String, List<Alimento>> expandableListDetail) {
+    public ActivityEditarRefeicaoDia_Adapter(Context mContext, List<String> expandableListTitle, HashMap<String, List<AlimentoModel>> expandableListDetail) {
         this.mContext = mContext;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
@@ -76,13 +68,21 @@ public class ActivityEditarRefeicaoDia_Adapter extends BaseExpandableListAdapter
 
         TextView textTituloRefeicaoEditar = convertView.findViewById(R.id.textTituloRefeicaoEditar);
         textTituloRefeicaoEditar.setText(listTitle);
+
+        convertView.findViewById(R.id.btnAdicionarVincularAlimento).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((ActivityEditarRefeicaoDia)mContext).AbrirActivityVincularAlimento();
+            }
+        });
+
         return convertView;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-        Alimento alimento = (Alimento) getChild(groupPosition, childPosition);
+        AlimentoModel alimentoModel = (AlimentoModel) getChild(groupPosition, childPosition);
         if (convertView == null) {
 
             LayoutInflater inflater = (LayoutInflater)
@@ -92,12 +92,12 @@ public class ActivityEditarRefeicaoDia_Adapter extends BaseExpandableListAdapter
         }
 
         TextView expandedListTextView  = convertView.findViewById(R.id.textNomeAlimentoEditar);
-        expandedListTextView.setText(alimento.Nome);
+        expandedListTextView.setText(alimentoModel.Nome);
 
         convertView.findViewById(R.id.btnExcluirAlimentoRefeicao).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<Alimento> selectedGroupList = expandableListDetail.get(expandableListTitle.get(groupPosition));
+                List<AlimentoModel> selectedGroupList = expandableListDetail.get(expandableListTitle.get(groupPosition));
                 selectedGroupList.remove(childPosition);
                 notifyDataSetChanged();
             }

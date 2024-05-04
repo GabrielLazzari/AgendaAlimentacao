@@ -2,14 +2,14 @@ package com.atividade.agendaalimentacao;
 
 import java.util.List;
 
-public class Alimento {
+public class AlimentoModel {
     public int Id;
     public String Nome;
     public String Calorias;
 
-    public List<Alimento> ListaSugestoes;
+    public List<AlimentoModel> ListaSugestoes;
 
-    Alimento(int id, String nome, String calorias){
+    AlimentoModel(int id, String nome, String calorias){
         this.Id = id;
         this.Nome = nome;
         this.Calorias = calorias;
@@ -31,11 +31,11 @@ public class Alimento {
         return Calorias;
     }
 
-    public void setListaSugestoes(List<Alimento> listaSugestoes) {
+    public void setListaSugestoes(List<AlimentoModel> listaSugestoes) {
         ListaSugestoes = listaSugestoes;
     }
 
-    public List<Alimento> getListaSugestoes() {
+    public List<AlimentoModel> getListaSugestoes() {
         return ListaSugestoes;
     }
 }

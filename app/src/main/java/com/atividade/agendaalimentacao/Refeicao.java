@@ -5,15 +5,15 @@ import java.util.List;
 public class Refeicao {
     int DiaSemana;
     String Refeicao;
-    List<Alimento> ListaAlimentos;
+    List<AlimentoModel> listaAlimentoModels;
 
     Refeicao(){
 
     }
 
-    Refeicao(int diaSemana, String refeicao, List<Alimento> listaAlimentos){
+    Refeicao(int diaSemana, String refeicao, List<AlimentoModel> listaAlimentoModels){
         this.DiaSemana = diaSemana;
         this.Refeicao = refeicao;
-        this.ListaAlimentos = listaAlimentos;
+        this.listaAlimentoModels = listaAlimentoModels;
     }
 }

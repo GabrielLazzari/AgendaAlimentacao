@@ -37,7 +37,7 @@ public class ActivityEditarRefeicaoDia extends AppCompatActivity {
     ExpandableListView expandableListViewRefeicoesEditar;
     ExpandableListAdapter expandableListAdapterEditar;
     List<String> expandableListTitulo = new ArrayList<String>();
-    HashMap<String,List<Alimento>> expandableListItems;
+    HashMap<String,List<AlimentoModel>> expandableListItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,28 +134,28 @@ public class ActivityEditarRefeicaoDia extends AppCompatActivity {
     }
 
     public Dia RetornarDia(){
-        Alimento alimento1 = new Alimento(1, "Teste", "100kcal");
-        Alimento alimento2 = new Alimento(1, "Teste2", "200kcal");
-        Alimento alimento3 = new Alimento(1, "Teste3", "150kcal");
-        Alimento alimento4 = new Alimento(1, "Teste4", "500kcal");
-        Alimento alimento5 = new Alimento(1, "Teste5", "170kcal");
+        AlimentoModel alimentoModel1 = new AlimentoModel(1, "Teste", "100kcal");
+        AlimentoModel alimentoModel2 = new AlimentoModel(1, "Teste2", "200kcal");
+        AlimentoModel alimentoModel3 = new AlimentoModel(1, "Teste3", "150kcal");
+        AlimentoModel alimentoModel4 = new AlimentoModel(1, "Teste4", "500kcal");
+        AlimentoModel alimentoModel5 = new AlimentoModel(1, "Teste5", "170kcal");
 
-        Refeicao refeicao1 = new Refeicao(1, "Café", new ArrayList<Alimento>(Arrays.asList(
-                alimento1, alimento2
+        Refeicao refeicao1 = new Refeicao(1, "Café", new ArrayList<AlimentoModel>(Arrays.asList(
+                alimentoModel1, alimentoModel2
         )));
 
-        Refeicao refeicao2 = new Refeicao(1, "Almoço", new ArrayList<Alimento>(Arrays.asList(
-                alimento3
+        Refeicao refeicao2 = new Refeicao(1, "Almoço", new ArrayList<AlimentoModel>(Arrays.asList(
+                alimentoModel3
         )));
 
-        List<Alimento> listaSugestoes = new ArrayList<Alimento>(Arrays.asList(
-                alimento1, alimento3
+        List<AlimentoModel> listaSugestoes = new ArrayList<AlimentoModel>(Arrays.asList(
+                alimentoModel1, alimentoModel3
         ));
 
-        alimento4.setListaSugestoes(listaSugestoes);
+        alimentoModel4.setListaSugestoes(listaSugestoes);
 
-        Refeicao refeicao3 = new Refeicao(1, "Jantar", new ArrayList<Alimento>(Arrays.asList(
-                alimento4, alimento5
+        Refeicao refeicao3 = new Refeicao(1, "Jantar", new ArrayList<AlimentoModel>(Arrays.asList(
+                alimentoModel4, alimentoModel5
         )));
 
         Dia dia = new Dia(1, new ArrayList<Refeicao>(Arrays.asList(
@@ -165,7 +165,14 @@ public class ActivityEditarRefeicaoDia extends AppCompatActivity {
         return dia;
     }
 
-    public void teste(View v){
-        System.out.println("aaaa s");
+    public void AbrirActivityVincularAlimento(){
+        AdicionarAlimentoDialogFragment dialogFragment = new AdicionarAlimentoDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(), "AdicionarAlimentoDialogFragment");
+    }
+
+    public void AbrirActivityAlimentos(View v){
+        Intent activityAlimentos = new Intent(ActivityEditarRefeicaoDia.this, AlimentoActivityEditar.class);
+        activityAlimentos.putExtra("DiaSelecionado", DiaSelecionado);
+        startActivity(activityAlimentos);
     }
 }

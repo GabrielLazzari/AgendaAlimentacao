@@ -4,15 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,10 +16,10 @@ import java.util.List;
 public class MainActivity_RefeicaoAdapter extends BaseExpandableListAdapter {
     private Context mContext;
     private List<String> expandableListTitle;
-    private HashMap<String, List<Alimento>> expandableListDetail;
+    private HashMap<String, List<AlimentoModel>> expandableListDetail;
     int Dia = 0;
 
-    public MainActivity_RefeicaoAdapter(Context mContext, List<String> expandableListTitle, HashMap<String, List<Alimento>> expandableListDetail, int dia) {
+    public MainActivity_RefeicaoAdapter(Context mContext, List<String> expandableListTitle, HashMap<String, List<AlimentoModel>> expandableListDetail, int dia) {
         this.mContext = mContext;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
@@ -89,7 +83,7 @@ public class MainActivity_RefeicaoAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
         String tituloRefeicao = (String) getGroup(groupPosition);
-        Alimento alimento = (Alimento) getChild(groupPosition, childPosition);
+        AlimentoModel alimentoModel = (AlimentoModel) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
 
@@ -99,30 +93,30 @@ public class MainActivity_RefeicaoAdapter extends BaseExpandableListAdapter {
         }
 
         TextView expandedListTextView  = convertView.findViewById(R.id.textNomeAlimento);
-        expandedListTextView.setText(alimento.Nome);
+        expandedListTextView.setText(alimentoModel.Nome);
 
         TextView textCaloriasAlimento = convertView.findViewById(R.id.textCaloriasAlimento);
-        textCaloriasAlimento.setText(alimento.Calorias);
+        textCaloriasAlimento.setText(alimentoModel.Calorias);
 
-        if (alimento.ListaSugestoes == null){
-            alimento.ListaSugestoes = new ArrayList<Alimento>();
+        if (alimentoModel.ListaSugestoes == null){
+            alimentoModel.ListaSugestoes = new ArrayList<AlimentoModel>();
         }
 
         Button butSugestaoSubstituicao = convertView.findViewById(R.id.butSugestaoSubstituicao);
         butSugestaoSubstituicao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Alimento alimento1 = new Alimento(1, "Teste", "100kcal");
-                Alimento alimento2 = new Alimento(1, "Teste2", "200kcal");
-                List<Alimento> listaSugestoes = new ArrayList<Alimento>(Arrays.asList(
-                        alimento1, alimento2
+                AlimentoModel alimentoModel1 = new AlimentoModel(1, "Teste", "100kcal");
+                AlimentoModel alimentoModel2 = new AlimentoModel(1, "Teste2", "200kcal");
+                List<AlimentoModel> listaSugestoes = new ArrayList<AlimentoModel>(Arrays.asList(
+                        alimentoModel1, alimentoModel2
                 ));
-                alimento.ListaSugestoes = listaSugestoes;
-                ((MainActivity)mContext).AbrirSugestaoAlimentos(alimento.ListaSugestoes, tituloRefeicao, Dia);
+                alimentoModel.ListaSugestoes = listaSugestoes;
+                ((MainActivity)mContext).AbrirSugestaoAlimentos(alimentoModel.ListaSugestoes, tituloRefeicao, Dia);
             }
         });
 
-        if (alimento.ListaSugestoes.size() == 0){
+        if (alimentoModel.ListaSugestoes.size() == 0){
             butSugestaoSubstituicao.setVisibility(butSugestaoSubstituicao.GONE);
         }else{
             butSugestaoSubstituicao.setVisibility(butSugestaoSubstituicao.VISIBLE);
