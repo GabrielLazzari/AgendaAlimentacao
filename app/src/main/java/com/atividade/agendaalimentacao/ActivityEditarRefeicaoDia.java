@@ -166,7 +166,7 @@ public class ActivityEditarRefeicaoDia extends AppCompatActivity {
     }
 
     public void AbrirActivityVincularAlimento(){
-        AdicionarAlimentoDialogFragment dialogFragment = new AdicionarAlimentoDialogFragment();
+        AdicionarAlimentoDialogFragment dialogFragment = new AdicionarAlimentoDialogFragment(DiaSelecionado);
         dialogFragment.show(getSupportFragmentManager(), "AdicionarAlimentoDialogFragment");
     }
 

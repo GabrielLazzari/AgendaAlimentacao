@@ -7,6 +7,8 @@ public class Refeicao {
     String Refeicao;
     List<AlimentoModel> listaAlimentoModels;
 
+    String Descricao;
+
     Refeicao(){
 
     }

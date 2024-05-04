@@ -12,6 +12,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -20,12 +21,19 @@ import androidx.fragment.app.DialogFragment;
 
 public class AdicionarAlimentoDialogFragment extends DialogFragment {
 
+    int DiaSelecionado;
+
+    public AdicionarAlimentoDialogFragment(int dia){
+        this.DiaSelecionado = dia;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         return dialog;
     }
 
@@ -62,13 +70,21 @@ public class AdicionarAlimentoDialogFragment extends DialogFragment {
 
 
         Button fragmentAdicinarAlimento_button_salvar = view.findViewById(R.id.fragmentAdicinarAlimento_button_salvar);
+        ImageButton btnFechar = view.findViewById(R.id.btnFecharModal);
 
         fragmentAdicinarAlimento_button_salvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), MainActivity.class);
-
+                Intent intent = new Intent(v.getContext(), ActivityEditarRefeicaoDia.class);
+                intent.putExtra("DiaSelecionado", DiaSelecionado);
                 startActivity(intent);
+            }
+        });
+
+        btnFechar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
             }
         });
     }

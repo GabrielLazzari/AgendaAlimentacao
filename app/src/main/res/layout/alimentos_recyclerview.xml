@@ -11,15 +11,19 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="left"
-        android:text="item" />
+        android:layout_gravity="center_vertical"
+        android:text="item"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="right"
+        android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        android:gravity="center"
-        android:text="kcal" />
+        android:text="kcal"
+        android:textSize="24sp" />
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -27,6 +31,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/create_outline"
         android:background="?android:attr/selectableItemBackground"
-        android:contentDescription="Editar" />
+        android:contentDescription="Editar"
+        android:layout_marginLeft="20dp"/>
 
 </LinearLayout>

@@ -6,7 +6,7 @@ public class AlimentoModel {
     public int Id;
     public String Nome;
     public String Calorias;
-
+    public String Tipo;
     public List<AlimentoModel> ListaSugestoes;
 
     AlimentoModel(int id, String nome, String calorias){
@@ -33,6 +33,14 @@ public class AlimentoModel {
 
     public void setListaSugestoes(List<AlimentoModel> listaSugestoes) {
         ListaSugestoes = listaSugestoes;
+    }
+
+    public String getTipo() {
+        return Tipo;
+    }
+
+    public void setTipo(String tipo) {
+        Tipo = tipo;
     }
 
     public List<AlimentoModel> getListaSugestoes() {

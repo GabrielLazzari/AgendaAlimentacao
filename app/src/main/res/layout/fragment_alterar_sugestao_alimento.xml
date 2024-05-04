@@ -16,26 +16,28 @@
         <TableLayout
             android:id="@+id/tableLayout2"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_margin="50dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="40dp"
             android:background="#DA7735"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TableRow
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/textTituloRefeicaoEditar"
-                    android:layout_width="241dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="12dp"
                     android:text="Sugestões"
                     android:textColor="#000000"
                     android:textSize="28sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,26 +47,33 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|center_vertical"
                     android:layout_marginTop="4dp"
-                    android:text="x"
+                    android:background="@null"
+                    android:onClick="FecharSugestaoAlimentos"
                     android:textColor="#000000"
                     android:textSize="34sp"
-                    android:onClick="FecharSugestaoAlimentos"
                     app:srcCompat="@drawable/close_circle_outline"
-                    android:background="@null"/>
+                    android:layout_marginRight="5dp"/>
 
+            </TableRow>
 
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/listaItensSugeridosRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="#FFFFFF"
+                    android:layout_weight="1"/>
             </TableRow>
 
         </TableLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/listaItensSugeridosRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:background="#FFFFFF"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tableLayout2" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
