@@ -13,6 +13,9 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.atividade.agendaalimentacao.Repositorio.AlimentoRepositorio;
+import com.atividade.agendaalimentacao.model.Alimento;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -21,6 +24,8 @@ public class AlimentoActivityEditar extends AppCompatActivity {
 
     Calendar calendario = Calendar.getInstance();
     int DiaSelecionado = 0;
+
+    private AlimentoRepositorio bancoAlimento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +44,17 @@ public class AlimentoActivityEditar extends AppCompatActivity {
             DiaSelecionado = calendario.get(Calendar.DAY_OF_WEEK);
         }
 
-        List<AlimentoModel> dataList = new ArrayList<AlimentoModel>();
-        dataList.add(new AlimentoModel(1,"Item 1", "kcal"));
-        dataList.add(new AlimentoModel(2,"Item 2", "kcal"));
-        dataList.add(new AlimentoModel(3,"Item 3", "kcal"));
+        //List<Alimento> dataList = new ArrayList<Alimento>();
+        //dataList.add(new Alimento("Item 1", "kcal", "1"));
+        //dataList.add(new Alimento("Item 2", "kcal", "2"));
+        //dataList.add(new Alimento("Item 3", "kcal", "3"));
+
+        bancoAlimento = new AlimentoRepositorio(this);
+        List<Alimento> listaAlimentos = bancoAlimento.RetornarTodosAlimentos();
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        AlimentosAdapter adapter = new AlimentosAdapter(this, dataList, this.DiaSelecionado);
+        AlimentosAdapter adapter = new AlimentosAdapter(this, listaAlimentos, this.DiaSelecionado);
         recyclerView.setAdapter(adapter);
 
 

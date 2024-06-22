@@ -14,6 +14,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.atividade.agendaalimentacao.Repositorio.AgendaRepositorio;
+import com.atividade.agendaalimentacao.Repositorio.AlimentoRepositorio;
+import com.atividade.agendaalimentacao.model.Alimento;
+import com.atividade.agendaalimentacao.model.Dia;
+import com.atividade.agendaalimentacao.model.Refeicao;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,10 +40,13 @@ public class ActivityEditarRefeicaoDia extends AppCompatActivity {
 
     ImageButton btnCancelarDia; ImageButton btnSalvarDia;
 
+    private AgendaRepositorio bancoAgenda;
+    private AlimentoRepositorio bancoAlimento;
+
     ExpandableListView expandableListViewRefeicoesEditar;
     ExpandableListAdapter expandableListAdapterEditar;
     List<String> expandableListTitulo = new ArrayList<String>();
-    HashMap<String,List<AlimentoModel>> expandableListItems;
+    HashMap<String,List<Alimento>> expandableListItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +82,10 @@ public class ActivityEditarRefeicaoDia extends AppCompatActivity {
 
         DefiniListners();
 
-        dia = RetornarDia();
+        bancoAlimento = new AlimentoRepositorio(this);
+        bancoAgenda = new AgendaRepositorio(this);
+
+        dia = bancoAgenda.RetornarDiaSemana(DiaSelecionado);
         dia = Dia.RetornarRefeicoesVazias(dia, DiaSelecionado);
 
         expandableListItems = Dia.ConverterDiaParaHasMap(dia);
@@ -134,27 +146,27 @@ public class ActivityEditarRefeicaoDia extends AppCompatActivity {
     }
 
     public Dia RetornarDia(){
-        AlimentoModel alimentoModel1 = new AlimentoModel(1, "Teste", "100kcal");
-        AlimentoModel alimentoModel2 = new AlimentoModel(1, "Teste2", "200kcal");
-        AlimentoModel alimentoModel3 = new AlimentoModel(1, "Teste3", "150kcal");
-        AlimentoModel alimentoModel4 = new AlimentoModel(1, "Teste4", "500kcal");
-        AlimentoModel alimentoModel5 = new AlimentoModel(1, "Teste5", "170kcal");
+        Alimento alimentoModel1 = new Alimento("Teste", "100kcal", "1");
+        Alimento alimentoModel2 = new Alimento("Teste2", "200kcal", "2");
+        Alimento alimentoModel3 = new Alimento("Teste3", "150kcal", "3");
+        Alimento alimentoModel4 = new Alimento("Teste4", "500kcal", "4");
+        Alimento alimentoModel5 = new Alimento("Teste5", "170kcal", "5");
 
-        Refeicao refeicao1 = new Refeicao(1, "Café", new ArrayList<AlimentoModel>(Arrays.asList(
+        Refeicao refeicao1 = new Refeicao(1, "Café", new ArrayList<Alimento>(Arrays.asList(
                 alimentoModel1, alimentoModel2
         )));
 
-        Refeicao refeicao2 = new Refeicao(1, "Almoço", new ArrayList<AlimentoModel>(Arrays.asList(
+        Refeicao refeicao2 = new Refeicao(1, "Almoço", new ArrayList<Alimento>(Arrays.asList(
                 alimentoModel3
         )));
 
-        List<AlimentoModel> listaSugestoes = new ArrayList<AlimentoModel>(Arrays.asList(
+        List<Alimento> listaSugestoes = new ArrayList<Alimento>(Arrays.asList(
                 alimentoModel1, alimentoModel3
         ));
 
         alimentoModel4.setListaSugestoes(listaSugestoes);
 
-        Refeicao refeicao3 = new Refeicao(1, "Jantar", new ArrayList<AlimentoModel>(Arrays.asList(
+        Refeicao refeicao3 = new Refeicao(1, "Jantar", new ArrayList<Alimento>(Arrays.asList(
                 alimentoModel4, alimentoModel5
         )));
 

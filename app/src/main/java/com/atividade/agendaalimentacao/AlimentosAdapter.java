@@ -10,12 +10,14 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.atividade.agendaalimentacao.model.Alimento;
+
 import java.util.List;
 
 public class AlimentosAdapter extends RecyclerView.Adapter<AlimentosAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<AlimentoModel> dataList;
+    private List<Alimento> dataList;
 
     int DiaSelecionado;
 
@@ -30,7 +32,7 @@ public class AlimentosAdapter extends RecyclerView.Adapter<AlimentosAdapter.View
             imageButton = view.findViewById(R.id.imageButton);
         }
     }
-    public AlimentosAdapter(Context context, List<AlimentoModel> dataList, int dia) {
+    public AlimentosAdapter(Context context, List<Alimento> dataList, int dia) {
         this.mContext = context;
         this.dataList = dataList;
         this.DiaSelecionado = dia;
@@ -45,7 +47,7 @@ public class AlimentosAdapter extends RecyclerView.Adapter<AlimentosAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        AlimentoModel alimento = dataList.get(position);
+        Alimento alimento = dataList.get(position);
         holder.textView1.setText(alimento.Nome);
         holder.textView2.setText(alimento.Calorias);
         holder.imageButton.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +58,8 @@ public class AlimentosAdapter extends RecyclerView.Adapter<AlimentosAdapter.View
 
                 intent.putExtra("nome", alimento.getNome());
                 intent.putExtra("calorias", alimento.getCalorias());
+                intent.putExtra("tipo", alimento.getTipo());
+                intent.putExtra("idAlimento", alimento.getId());
                 intent.putExtra("DiaSelecionado", DiaSelecionado);
 
                 mContext.startActivity(intent);

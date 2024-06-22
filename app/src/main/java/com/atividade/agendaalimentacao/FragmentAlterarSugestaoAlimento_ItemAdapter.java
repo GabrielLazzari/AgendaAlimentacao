@@ -8,16 +8,18 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.atividade.agendaalimentacao.model.Alimento;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentAlterarSugestaoAlimento_ItemAdapter extends RecyclerView.Adapter<FragmentAlterarSugestaoAlimento_ItemAdapter.Activity_RecyclerView_Item> {
 
-    List<AlimentoModel> listaAlimentosSugestao = new ArrayList<AlimentoModel>();
+    List<Alimento> listaAlimentosSugestao = new ArrayList<Alimento>();
     String TituloRefeicao = "";
     int Dia = 0;
 
-    public FragmentAlterarSugestaoAlimento_ItemAdapter(List<AlimentoModel> alimentosSugestao, String tituloRefeicao, int dia) {
+    public FragmentAlterarSugestaoAlimento_ItemAdapter(List<Alimento> alimentosSugestao, String tituloRefeicao, int dia) {
         this.listaAlimentosSugestao = alimentosSugestao;
         this.TituloRefeicao = tituloRefeicao;
         this.Dia = dia;
@@ -35,7 +37,7 @@ public class FragmentAlterarSugestaoAlimento_ItemAdapter extends RecyclerView.Ad
     @Override
     public void onBindViewHolder(Activity_RecyclerView_Item itemView, int i) {
 
-        AlimentoModel alimentoModel = this.listaAlimentosSugestao.get(i);
+        Alimento alimentoModel = this.listaAlimentosSugestao.get(i);
         itemView.textNomeItemAlterar.setText(alimentoModel.Nome);
         itemView.textCaloriasItemAlterar.setText(alimentoModel.Calorias);
 

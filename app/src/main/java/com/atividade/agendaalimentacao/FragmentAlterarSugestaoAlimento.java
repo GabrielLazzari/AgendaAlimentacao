@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.atividade.agendaalimentacao.model.Alimento;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,18 +20,18 @@ public class FragmentAlterarSugestaoAlimento extends Fragment {
 
     public FragmentAlterarSugestaoAlimento_ItemAdapter adpterItensSugeridos;
 
-    List<AlimentoModel> alimentosSugeridos = new ArrayList<AlimentoModel>();
+    List<Alimento> alimentosSugeridos = new ArrayList<Alimento>();
     String TituloRefeicao = "";
     int Dia = 0;
 
-    public FragmentAlterarSugestaoAlimento(List<AlimentoModel> alimentosSugeridos, String tituloRefeicao, int dia) {
+    public FragmentAlterarSugestaoAlimento(List<Alimento> alimentosSugeridos, String tituloRefeicao, int dia) {
         this.alimentosSugeridos = alimentosSugeridos;
         this.TituloRefeicao = tituloRefeicao;
         this.Dia = dia;
 
         for (int c = 0; c<this.alimentosSugeridos.size(); c++){
             if (this.alimentosSugeridos.get(c).ListaSugestoes == null){
-                this.alimentosSugeridos.get(c).ListaSugestoes = new ArrayList<AlimentoModel>();
+                this.alimentosSugeridos.get(c).ListaSugestoes = new ArrayList<Alimento>();
             }
         }
     }

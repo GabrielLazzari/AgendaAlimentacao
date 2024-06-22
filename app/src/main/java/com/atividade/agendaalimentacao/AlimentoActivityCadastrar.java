@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,12 +13,26 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.atividade.agendaalimentacao.Repositorio.AlimentoRepositorio;
+import com.atividade.agendaalimentacao.model.Alimento;
+
 import java.util.Calendar;
 
 public class AlimentoActivityCadastrar extends AppCompatActivity {
 
     Calendar calendario = Calendar.getInstance();
     int DiaSelecionado = 0;
+
+    int idAlimento;
+    EditText cadastrar_alimento_nome;
+    EditText cadastrar_alimento_calorias;
+    EditText cadastrar_alimento_tipo;
+
+    String nomeAlimentoAntes;
+    String caloriasAlimentoAntes;
+    String tipoAlimentoAntes;
+
+    private AlimentoRepositorio bancoAlimento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +54,32 @@ public class AlimentoActivityCadastrar extends AppCompatActivity {
         Intent intent = getIntent();
         String receivedValueNome = intent.getStringExtra("nome");
         String receivedValueCalorias = intent.getStringExtra("calorias");
+        String receivedValueTipo = intent.getStringExtra("tipo");
+        idAlimento = intent.getIntExtra("idAlimento", -1);
 
-        EditText cadastrar_alimento_nome = findViewById(R.id.cadastrar_alimento_nome);
+        nomeAlimentoAntes = receivedValueNome;
+        caloriasAlimentoAntes = receivedValueCalorias;
+        tipoAlimentoAntes = receivedValueTipo;
+
+        cadastrar_alimento_nome = findViewById(R.id.cadastrar_alimento_nome);
         cadastrar_alimento_nome.setText(receivedValueNome);
 
-        EditText cadastrar_alimento_calorias = findViewById(R.id.cadastrar_alimento_calorias);
+        cadastrar_alimento_calorias = findViewById(R.id.cadastrar_alimento_calorias);
         cadastrar_alimento_calorias.setText(receivedValueCalorias);
 
+        cadastrar_alimento_tipo = findViewById(R.id.cadastrar_alimento_tipo);
+        cadastrar_alimento_tipo.setText(receivedValueTipo);
 
         ImageButton imagebutton_excluir = findViewById(R.id.imagebutton_excluir);
+
+        bancoAlimento = new AlimentoRepositorio(this);
 
         imagebutton_excluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Alimento alimentoAntes = new Alimento(nomeAlimentoAntes, caloriasAlimentoAntes, tipoAlimentoAntes);
+                bancoAlimento.DeletarAlimento(alimentoAntes);
+
                 Intent intent = new Intent(AlimentoActivityCadastrar.this, AlimentoActivityEditar.class);
                 intent.putExtra("DiaSelecionado", DiaSelecionado);
 
@@ -78,6 +106,17 @@ public class AlimentoActivityCadastrar extends AppCompatActivity {
         imageButton_salvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Alimento alimentoAntes = new Alimento(nomeAlimentoAntes, caloriasAlimentoAntes, tipoAlimentoAntes);
+                Alimento alimento = new Alimento(idAlimento, cadastrar_alimento_nome.getText().toString(),
+                        cadastrar_alimento_calorias.getText().toString(), cadastrar_alimento_tipo.getText().toString());
+
+                if (nomeAlimentoAntes == null){
+                    bancoAlimento.InserirAlimento(alimento.Nome, alimento.Calorias, alimento.Tipo);
+                }else{
+                    bancoAlimento.AtualizarAlimento(alimento, alimentoAntes);
+                }
+
                 Intent activityAlimentoEditar = new Intent(AlimentoActivityCadastrar.this, AlimentoActivityEditar.class);
 
                 activityAlimentoEditar.putExtra("DiaSelecionado", DiaSelecionado);

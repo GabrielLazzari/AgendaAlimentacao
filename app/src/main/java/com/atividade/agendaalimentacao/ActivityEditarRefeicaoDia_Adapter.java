@@ -5,8 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.atividade.agendaalimentacao.model.Alimento;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,9 +15,9 @@ import java.util.List;
 public class ActivityEditarRefeicaoDia_Adapter extends BaseExpandableListAdapter {
     private Context mContext;
     private List<String> expandableListTitle;
-    private HashMap<String, List<AlimentoModel>> expandableListDetail;
+    private HashMap<String, List<Alimento>> expandableListDetail;
 
-    public ActivityEditarRefeicaoDia_Adapter(Context mContext, List<String> expandableListTitle, HashMap<String, List<AlimentoModel>> expandableListDetail) {
+    public ActivityEditarRefeicaoDia_Adapter(Context mContext, List<String> expandableListTitle, HashMap<String, List<Alimento>> expandableListDetail) {
         this.mContext = mContext;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
@@ -82,7 +83,7 @@ public class ActivityEditarRefeicaoDia_Adapter extends BaseExpandableListAdapter
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-        AlimentoModel alimentoModel = (AlimentoModel) getChild(groupPosition, childPosition);
+        Alimento alimentoModel = (Alimento) getChild(groupPosition, childPosition);
         if (convertView == null) {
 
             LayoutInflater inflater = (LayoutInflater)
@@ -97,7 +98,7 @@ public class ActivityEditarRefeicaoDia_Adapter extends BaseExpandableListAdapter
         convertView.findViewById(R.id.btnExcluirAlimentoRefeicao).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<AlimentoModel> selectedGroupList = expandableListDetail.get(expandableListTitle.get(groupPosition));
+                List<Alimento> selectedGroupList = expandableListDetail.get(expandableListTitle.get(groupPosition));
                 selectedGroupList.remove(childPosition);
                 notifyDataSetChanged();
             }

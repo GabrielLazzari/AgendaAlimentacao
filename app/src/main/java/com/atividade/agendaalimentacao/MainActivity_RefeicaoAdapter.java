@@ -8,6 +8,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.atividade.agendaalimentacao.model.Alimento;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -16,10 +18,10 @@ import java.util.List;
 public class MainActivity_RefeicaoAdapter extends BaseExpandableListAdapter {
     private Context mContext;
     private List<String> expandableListTitle;
-    private HashMap<String, List<AlimentoModel>> expandableListDetail;
+    private HashMap<String, List<Alimento>> expandableListDetail;
     int Dia = 0;
 
-    public MainActivity_RefeicaoAdapter(Context mContext, List<String> expandableListTitle, HashMap<String, List<AlimentoModel>> expandableListDetail, int dia) {
+    public MainActivity_RefeicaoAdapter(Context mContext, List<String> expandableListTitle, HashMap<String, List<Alimento>> expandableListDetail, int dia) {
         this.mContext = mContext;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
@@ -83,7 +85,7 @@ public class MainActivity_RefeicaoAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
         String tituloRefeicao = (String) getGroup(groupPosition);
-        AlimentoModel alimentoModel = (AlimentoModel) getChild(groupPosition, childPosition);
+        Alimento alimentoModel = (Alimento) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
 
@@ -99,16 +101,16 @@ public class MainActivity_RefeicaoAdapter extends BaseExpandableListAdapter {
         textCaloriasAlimento.setText(alimentoModel.Calorias);
 
         if (alimentoModel.ListaSugestoes == null){
-            alimentoModel.ListaSugestoes = new ArrayList<AlimentoModel>();
+            alimentoModel.ListaSugestoes = new ArrayList<Alimento>();
         }
 
         Button butSugestaoSubstituicao = convertView.findViewById(R.id.butSugestaoSubstituicao);
         butSugestaoSubstituicao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlimentoModel alimentoModel1 = new AlimentoModel(1, "Teste", "100kcal");
-                AlimentoModel alimentoModel2 = new AlimentoModel(1, "Teste2", "200kcal");
-                List<AlimentoModel> listaSugestoes = new ArrayList<AlimentoModel>(Arrays.asList(
+                Alimento alimentoModel1 = new Alimento("Teste", "100kcal", "1");
+                Alimento alimentoModel2 = new Alimento("Teste2", "200kcal", "2");
+                List<Alimento> listaSugestoes = new ArrayList<Alimento>(Arrays.asList(
                         alimentoModel1, alimentoModel2
                 ));
                 alimentoModel.ListaSugestoes = listaSugestoes;

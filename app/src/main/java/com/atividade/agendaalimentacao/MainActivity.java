@@ -17,6 +17,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.atividade.agendaalimentacao.model.Alimento;
+import com.atividade.agendaalimentacao.model.Dia;
+import com.atividade.agendaalimentacao.model.Refeicao;
+
+import com.atividade.agendaalimentacao.Repositorio.AgendaRepositorio;
+import com.atividade.agendaalimentacao.Repositorio.AlimentoRepositorio;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
     int DiaSelecionado = -1;
     public List<Dia> diasSemana = new ArrayList<Dia>();
 
+    private AgendaRepositorio bancoAgenda;
+    private AlimentoRepositorio bancoAlimento;
+
     Button btnDia1; Button btnDia2; Button btnDia3; Button btnDia4; Button btnDia5;
     Button btnDia6; Button btnDia7; Button btnDataAtual; ImageButton btnEditarListaAlimentacao;
     ArrayList<Button> botoesDia;
@@ -45,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     ExpandableListAdapter expandableListAdapter;
     MainActivity_RefeicaoAdapter mainActivityRefeicaoAdapter = null;
     List<String> expandableListTitulo = new ArrayList<String>();
-    HashMap<String,List<AlimentoModel>> expandableListItems;
+    HashMap<String,List<Alimento>> expandableListItems;
 
 
     @Override
@@ -89,11 +99,16 @@ public class MainActivity extends AppCompatActivity {
         AlterarPosicaoDia(DiaSelecionado, DiaSelecionado);
 
 
-        for (int c=0; c<7; c++){
-            this.diasSemana.add(this.RetornarDia());
-        }
+        //for (int c=0; c<7; c++){
+            //this.diasSemana.add(this.RetornarDia());
+        ///}
 
-        Dia dia = this.RetornarDia();
+        bancoAlimento = new AlimentoRepositorio(this);
+        bancoAgenda = new AgendaRepositorio(this);
+
+        //Dia d = this.RetornarDia();
+        //bancoAgenda.AtualizarDia(d);
+        Dia dia = bancoAgenda.RetornarDiaSemana(DiaSelecionado);
 
         expandableListItems = Dia.ConverterDiaParaHasMap(dia);
 
@@ -140,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent editarDia = new Intent(MainActivity.this, ActivityEditarRefeicaoDia.class);
 
-                Dia dia = RetornarDia();
+                Dia dia = bancoAgenda.RetornarDiaSemana(DiaSelecionado);
                 expandableListItems = Dia.ConverterDiaParaHasMap(dia);
 
                 editarDia.putExtra("DiaSelecionado", DiaSelecionado);
@@ -164,37 +179,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public Dia RetornarDia(){
-        AlimentoModel alimentoModel1 = new AlimentoModel(1, "Teste", "100kcal");
-        AlimentoModel alimentoModel2 = new AlimentoModel(2, "Teste2", "200kcal");
-        AlimentoModel alimentoModel3 = new AlimentoModel(3, "Teste3", "150kcal");
-        AlimentoModel alimentoModel4 = new AlimentoModel(4, "Teste4", "500kcal");
-        AlimentoModel alimentoModel5 = new AlimentoModel(5, "Teste5", "170kcal");
 
-        Refeicao refeicao1 = new Refeicao(1, "Café", new ArrayList<AlimentoModel>(Arrays.asList(
-                alimentoModel1, alimentoModel2
-        )));
-
-        Refeicao refeicao2 = new Refeicao(1, "Almoço", new ArrayList<AlimentoModel>(Arrays.asList(
-                alimentoModel3
-        )));
-
-        List<AlimentoModel> listaSugestoes = new ArrayList<AlimentoModel>(Arrays.asList(
-                alimentoModel1, alimentoModel3
-        ));
-
-        alimentoModel4.setListaSugestoes(listaSugestoes);
-
-        Refeicao refeicao3 = new Refeicao(1, "Jantar", new ArrayList<AlimentoModel>(Arrays.asList(
-                alimentoModel4, alimentoModel5
-        )));
-
-        Dia dia = new Dia(1, new ArrayList<Refeicao>(Arrays.asList(
-                refeicao1, refeicao2, refeicao3
-        )));
-
-        return dia;
-    }
 
     public void AbrirRelatorios(View v){
         Intent relatorios = new Intent(MainActivity.this, RelatorioActivity.class);
@@ -202,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(relatorios);
     }
 
-    public void AbrirSugestaoAlimentos(List<AlimentoModel> alimentosSugeridos, String tituloRefeicao, int dia){
+    public void AbrirSugestaoAlimentos(List<Alimento> alimentosSugeridos, String tituloRefeicao, int dia){
         FragmentAlterarSugestaoAlimento fragmentAlterarSugestaoAlimento = new FragmentAlterarSugestaoAlimento(alimentosSugeridos, tituloRefeicao, dia);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentSugestao, fragmentAlterarSugestaoAlimento);
@@ -215,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().popBackStack();
     }
 
-    public static void AlterarSugestaoAlimento(AlimentoModel alimentoModel, String tituloRefeicao, int dia){
+    public static void AlterarSugestaoAlimento(Alimento alimentoModel, String tituloRefeicao, int dia){
         System.out.println("Trocou");
         System.out.println(tituloRefeicao);
         System.out.println(dia);
