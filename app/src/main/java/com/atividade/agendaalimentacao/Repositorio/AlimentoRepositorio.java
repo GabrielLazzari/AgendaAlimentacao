@@ -22,13 +22,11 @@ public class AlimentoRepositorio extends SQLiteOpenHelper{
     public AlimentoRepositorio(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         //context.deleteDatabase(DATABASE_NAME);
-        this.CriarPrimeirosRegistrosAlimento();
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         new CriarBase(sqLiteDatabase);
-        this.CriarPrimeirosRegistrosAlimento();
     }
 
     @Override
@@ -99,7 +97,30 @@ public class AlimentoRepositorio extends SQLiteOpenHelper{
         return listaAlimentos;
     }
 
-    public void CriarPrimeirosRegistrosAlimento(){
+    public ArrayList<String> RetornarListaNomesAlimentos(){
+        String query = String.format("SELECT Nome FROM Alimento");
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        ArrayList<String> listaNomeAlimentos = new ArrayList<String>();
+
+        if (cursor.moveToFirst()){
+            do {
+                @SuppressLint("Range") String nome = cursor.getString(cursor.getColumnIndex("Nome"));
+
+                listaNomeAlimentos.add(nome);
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return listaNomeAlimentos;
+    }
+
+    public boolean CriarPrimeirosRegistrosAlimento(){
         String query = String.format("SELECT * FROM Alimento LIMIT 1");
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -131,5 +152,7 @@ public class AlimentoRepositorio extends SQLiteOpenHelper{
 
         cursor.close();
         db.close();
+
+        return temRegistros;
     }
 }

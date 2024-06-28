@@ -85,7 +85,17 @@ public class ActivityEditarRefeicaoDia extends AppCompatActivity {
         bancoAlimento = new AlimentoRepositorio(this);
         bancoAgenda = new AgendaRepositorio(this);
 
-        dia = bancoAgenda.RetornarDiaSemana(DiaSelecionado);
+        try{
+            String refeicaoModal = getIntent().getStringExtra("Refeicao");
+            String alimentoModal = getIntent().getStringExtra("AlimentoSelecionado");
+            if (!refeicaoModal.isEmpty() && !alimentoModal.isEmpty()){
+                bancoAgenda.InserirAlimentoRefeicaoBuffer(refeicaoModal, alimentoModal);
+            }
+        }catch (Exception e){
+
+        }
+
+        dia = bancoAgenda.RetornarRefeicaoBuffer(DiaSelecionado);
         dia = Dia.RetornarRefeicoesVazias(dia, DiaSelecionado);
 
         expandableListItems = Dia.ConverterDiaParaHasMap(dia);
@@ -95,7 +105,7 @@ public class ActivityEditarRefeicaoDia extends AppCompatActivity {
         expandableListTitulo = new ArrayList<>(expandableListItems.keySet());
 
         expandableListAdapterEditar = new ActivityEditarRefeicaoDia_Adapter
-                (this, expandableListTitulo, expandableListItems);
+                (this, expandableListTitulo, expandableListItems, bancoAgenda);
 
         expandableListViewRefeicoesEditar.setAdapter(expandableListAdapterEditar);
 
@@ -109,6 +119,7 @@ public class ActivityEditarRefeicaoDia extends AppCompatActivity {
 
                 main.putExtra("DiaSelecionado", DiaSelecionado);
                 //editarDia.putExtra("DadosDia", expandableListDetail);
+                bancoAgenda.LimparRefeicaoBuffer();
 
                 startActivity(main);
             }
@@ -120,6 +131,8 @@ public class ActivityEditarRefeicaoDia extends AppCompatActivity {
                 Intent main = new Intent(ActivityEditarRefeicaoDia.this, MainActivity.class);
 
                 main.putExtra("DiaSelecionado", DiaSelecionado);
+                Dia diaModalAux = bancoAgenda.RetornarRefeicaoBuffer(DiaSelecionado);
+                bancoAgenda.AtualizarDia(diaModalAux);
                 //editarDia.putExtra("DadosDia", expandableListDetail);
 
                 startActivity(main);
@@ -145,40 +158,9 @@ public class ActivityEditarRefeicaoDia extends AppCompatActivity {
         }
     }
 
-    public Dia RetornarDia(){
-        Alimento alimentoModel1 = new Alimento("Teste", "100kcal", "1");
-        Alimento alimentoModel2 = new Alimento("Teste2", "200kcal", "2");
-        Alimento alimentoModel3 = new Alimento("Teste3", "150kcal", "3");
-        Alimento alimentoModel4 = new Alimento("Teste4", "500kcal", "4");
-        Alimento alimentoModel5 = new Alimento("Teste5", "170kcal", "5");
-
-        Refeicao refeicao1 = new Refeicao(1, "Café", new ArrayList<Alimento>(Arrays.asList(
-                alimentoModel1, alimentoModel2
-        )));
-
-        Refeicao refeicao2 = new Refeicao(1, "Almoço", new ArrayList<Alimento>(Arrays.asList(
-                alimentoModel3
-        )));
-
-        List<Alimento> listaSugestoes = new ArrayList<Alimento>(Arrays.asList(
-                alimentoModel1, alimentoModel3
-        ));
-
-        alimentoModel4.setListaSugestoes(listaSugestoes);
-
-        Refeicao refeicao3 = new Refeicao(1, "Jantar", new ArrayList<Alimento>(Arrays.asList(
-                alimentoModel4, alimentoModel5
-        )));
-
-        Dia dia = new Dia(1, new ArrayList<Refeicao>(Arrays.asList(
-                refeicao1, refeicao2, refeicao3
-        )));
-
-        return dia;
-    }
-
-    public void AbrirActivityVincularAlimento(){
-        AdicionarAlimentoDialogFragment dialogFragment = new AdicionarAlimentoDialogFragment(DiaSelecionado);
+    public void AbrirActivityVincularAlimento(String refeicao){
+        ArrayList<String> nomesAlimentos = bancoAlimento.RetornarListaNomesAlimentos();
+        AdicionarAlimentoDialogFragment dialogFragment = new AdicionarAlimentoDialogFragment(DiaSelecionado, refeicao, nomesAlimentos);
         dialogFragment.show(getSupportFragmentManager(), "AdicionarAlimentoDialogFragment");
     }
 

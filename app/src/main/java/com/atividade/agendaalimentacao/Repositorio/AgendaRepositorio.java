@@ -24,7 +24,6 @@ public class AgendaRepositorio extends SQLiteOpenHelper {
 
     public AgendaRepositorio(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        CriarPrimeirosRegistros();
     }
 
     @Override
@@ -76,15 +75,18 @@ public class AgendaRepositorio extends SQLiteOpenHelper {
     public void AtualizarDia(Dia dia){
         SQLiteDatabase db = this.getWritableDatabase();
 
+        db.delete("AlimentoRefeicao", "RefeicaoDia = ?", new String[]{String.valueOf(dia.DiaSemana)});
+        db.delete("RefeicaoDia", "DiaSemana = ?", new String[]{String.valueOf(dia.DiaSemana)});
+
         for (int d=0; d<dia.ListaRefeicoes.size(); d++){
             Refeicao refeicao = dia.ListaRefeicoes.get(d);
 
-            for (int a=0; a<refeicao.listaAlimentoModels.size(); a++){
-                Alimento alimento = refeicao.listaAlimentoModels.get(a);
-                db.delete("AlimentoRefeicao", "RefeicaoDia = ? AND Refeicao = ? AND NomeAlimento = ?", new String[]{String.valueOf(refeicao.DiaSemana), refeicao.Refeicao, String.valueOf(alimento.Nome)});
-            }
+            //for (int a=0; a<refeicao.listaAlimentoModels.size(); a++){
+            //    Alimento alimento = refeicao.listaAlimentoModels.get(a);
+            //    db.delete("AlimentoRefeicao", "RefeicaoDia = ? AND Refeicao = ? AND NomeAlimento = ?", new String[]{String.valueOf(refeicao.DiaSemana), refeicao.Refeicao, String.valueOf(alimento.Nome)});
+            //}
 
-            db.delete("RefeicaoDia", "DiaSemana = ? AND Refeicao = ?", new String[]{String.valueOf(refeicao.DiaSemana), refeicao.Refeicao});
+            //db.delete("RefeicaoDia", "DiaSemana = ? AND Refeicao = ?", new String[]{String.valueOf(refeicao.DiaSemana), refeicao.Refeicao});
 
             this.InserirDia(refeicao, db);
         }
@@ -133,8 +135,6 @@ public class AgendaRepositorio extends SQLiteOpenHelper {
         if (cursor.moveToFirst()){
             do {
                 @SuppressLint("Range") String nome = cursor.getString(cursor.getColumnIndex("NomeAlimento"));
-                //@SuppressLint("Range") String calorias = cursor.getString(cursor.getColumnIndex("Calorias"));
-                //@SuppressLint("Range") String tipo = cursor.getString(cursor.getColumnIndex("Tipo"));
 
                 alimentos.add(new Alimento(nome, "", ""));
 
@@ -146,7 +146,7 @@ public class AgendaRepositorio extends SQLiteOpenHelper {
         return alimentos;
     }
 
-    private void CriarPrimeirosRegistros(){
+    public void CriarPrimeirosRegistros(){
         Calendar cal = Calendar.getInstance();
         int diaSelecionado = cal.get(Calendar.DAY_OF_WEEK);
 
@@ -179,5 +179,83 @@ public class AgendaRepositorio extends SQLiteOpenHelper {
         )));
 
         this.AtualizarDia(dia);
+    }
+
+
+    public void LimparRefeicaoBuffer(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("RefeicaoBuffer", "", new String[]{});
+        db.close();
+    }
+
+    public Dia RetornarRefeicaoBuffer(int dia){
+        String query = String.format("SELECT * FROM RefeicaoBuffer");
+
+        Dia diaModel = new Dia();
+        diaModel.DiaSemana = dia;
+        diaModel.ListaRefeicoes = new ArrayList<Refeicao>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        String nomeRefeicao = "";
+
+        if (cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range") String nomeRefeicaoBanco = cursor.getString(cursor.getColumnIndex("Refeicao"));
+                @SuppressLint("Range") String nomeAlimentoBanco = cursor.getString(cursor.getColumnIndex("NomeAlimento"));
+                if (!nomeRefeicao.equals(nomeRefeicaoBanco)){
+                    diaModel.ListaRefeicoes.add(new Refeicao());
+                    nomeRefeicao = nomeRefeicaoBanco;
+                    diaModel.ListaRefeicoes.get(diaModel.ListaRefeicoes.size()-1).listaAlimentoModels = new ArrayList<Alimento>();
+                    diaModel.ListaRefeicoes.get(diaModel.ListaRefeicoes.size()-1).DiaSemana = dia;
+                    diaModel.ListaRefeicoes.get(diaModel.ListaRefeicoes.size()-1).Refeicao = nomeRefeicaoBanco;
+                }
+                diaModel.ListaRefeicoes.get(diaModel.ListaRefeicoes.size()-1).listaAlimentoModels.add(new Alimento(nomeAlimentoBanco, "", ""));
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return diaModel;
+    }
+
+    public void InserirEditarPrimeiraVezRefeicaoBuffer(Dia diaModel){
+        this.LimparRefeicaoBuffer();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        for (int r=0; r<diaModel.ListaRefeicoes.size(); r++){
+            Refeicao refeicao = diaModel.ListaRefeicoes.get(r);
+            for (int a=0; a<refeicao.listaAlimentoModels.size(); a++){
+                Alimento alimento = refeicao.listaAlimentoModels.get(a);
+                ContentValues values = new ContentValues();
+                values.put("Refeicao", refeicao.Refeicao);
+                values.put("NomeAlimento", alimento.Nome);
+
+                db.insert("RefeicaoBuffer", null, values);
+            }
+        }
+
+        db.close();
+    }
+
+    public void InserirAlimentoRefeicaoBuffer(String refeicao, String nomeAlimento){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("Refeicao", refeicao);
+        values.put("NomeAlimento", nomeAlimento);
+
+        db.insert("RefeicaoBuffer", null, values);
+
+        db.close();
+    }
+
+    public void RemoverAlimentoRefeicaoBuffer(String refeicao, String nomeAlimento){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("RefeicaoBuffer", "Refeicao = ? AND NomeAlimento = ?", new String[]{String.valueOf(refeicao), nomeAlimento});
+        db.close();
     }
 }

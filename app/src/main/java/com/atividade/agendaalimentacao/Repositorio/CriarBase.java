@@ -39,5 +39,14 @@ public class CriarBase {
                 ");";
 
         sqLiteDatabase.execSQL(SQL_CREATE_ALIMENTOREFEICAO_TABLE);
+
+        final String SQL_CREATE_REFEICAOBUFFER_TABLE = "CREATE TABLE RefeicaoBuffer (" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "Refeicao TEXT, " +
+                "NomeAlimento TEXT, " +
+                "QtdAlimento TEXT " +
+                ");";
+
+        sqLiteDatabase.execSQL(SQL_CREATE_REFEICAOBUFFER_TABLE);
     }
 }

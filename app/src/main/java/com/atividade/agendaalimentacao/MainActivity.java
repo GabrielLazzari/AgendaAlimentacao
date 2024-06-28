@@ -104,10 +104,18 @@ public class MainActivity extends AppCompatActivity {
         ///}
 
         bancoAlimento = new AlimentoRepositorio(this);
+        boolean temRegistros = bancoAlimento.CriarPrimeirosRegistrosAlimento();
         bancoAgenda = new AgendaRepositorio(this);
+        if (!temRegistros){
+            bancoAgenda.CriarPrimeirosRegistros();
+        }
 
         //Dia d = this.RetornarDia();
         //bancoAgenda.AtualizarDia(d);
+        CarregarDiaTela();
+    }
+
+    public void CarregarDiaTela(){
         Dia dia = bancoAgenda.RetornarDiaSemana(DiaSelecionado);
 
         expandableListItems = Dia.ConverterDiaParaHasMap(dia);
@@ -131,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     AlterarPosicaoDia(finalDia, cal.get(Calendar.DAY_OF_WEEK));
+                    CarregarDiaTela();
                     if (mainActivityRefeicaoAdapter != null){
                         mainActivityRefeicaoAdapter.AtualizarDiaSemana(finalDia);
                     }
@@ -144,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlterarPosicaoDia(cal.get(Calendar.DAY_OF_WEEK), cal.get(Calendar.DAY_OF_WEEK));
+                CarregarDiaTela();
                 if (mainActivityRefeicaoAdapter != null){
                     mainActivityRefeicaoAdapter.AtualizarDiaSemana(cal.get(Calendar.DAY_OF_WEEK));
                 }
@@ -159,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 expandableListItems = Dia.ConverterDiaParaHasMap(dia);
 
                 editarDia.putExtra("DiaSelecionado", DiaSelecionado);
+                bancoAgenda.InserirEditarPrimeiraVezRefeicaoBuffer(dia);
                 //editarDia.putExtra("DadosDia", expandableListDetail);
 
                 startActivity(editarDia);

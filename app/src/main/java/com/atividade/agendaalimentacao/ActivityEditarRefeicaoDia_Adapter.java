@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import com.atividade.agendaalimentacao.Repositorio.AgendaRepositorio;
 import com.atividade.agendaalimentacao.model.Alimento;
+import com.atividade.agendaalimentacao.model.Dia;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,10 +19,13 @@ public class ActivityEditarRefeicaoDia_Adapter extends BaseExpandableListAdapter
     private List<String> expandableListTitle;
     private HashMap<String, List<Alimento>> expandableListDetail;
 
-    public ActivityEditarRefeicaoDia_Adapter(Context mContext, List<String> expandableListTitle, HashMap<String, List<Alimento>> expandableListDetail) {
+    private AgendaRepositorio bancoAgenda;
+
+    public ActivityEditarRefeicaoDia_Adapter(Context mContext, List<String> expandableListTitle, HashMap<String, List<Alimento>> expandableListDetail, AgendaRepositorio bancoAgenda) {
         this.mContext = mContext;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
+        this.bancoAgenda = bancoAgenda;
     }
 
     @Override
@@ -73,7 +78,7 @@ public class ActivityEditarRefeicaoDia_Adapter extends BaseExpandableListAdapter
         convertView.findViewById(R.id.btnAdicionarVincularAlimento).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((ActivityEditarRefeicaoDia)mContext).AbrirActivityVincularAlimento();
+                ((ActivityEditarRefeicaoDia)mContext).AbrirActivityVincularAlimento(listTitle);
             }
         });
 
@@ -99,8 +104,10 @@ public class ActivityEditarRefeicaoDia_Adapter extends BaseExpandableListAdapter
             @Override
             public void onClick(View view) {
                 List<Alimento> selectedGroupList = expandableListDetail.get(expandableListTitle.get(groupPosition));
+                bancoAgenda.RemoverAlimentoRefeicaoBuffer(expandableListTitle.get(groupPosition).toString(), alimentoModel.Nome);
                 selectedGroupList.remove(childPosition);
                 notifyDataSetChanged();
+
             }
         });
 
