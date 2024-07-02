@@ -41,8 +41,7 @@
             android:text="Data Inicial"
             android:textSize="24sp" />
 
-
-        <EditText
+        <Spinner
             android:id="@+id/relatorio_datainicial"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,7 +64,7 @@
             android:textSize="24sp" />
 
 
-        <EditText
+        <Spinner
             android:id="@+id/relatorio_datafinal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
