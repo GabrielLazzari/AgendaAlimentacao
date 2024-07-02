@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.atividade.agendaalimentacao.Repositorio.AgendaRepositorio;
 import com.atividade.agendaalimentacao.model.Alimento;
 
 import java.util.ArrayList;
@@ -22,12 +23,16 @@ public class FragmentAlterarSugestaoAlimento extends Fragment {
 
     List<Alimento> alimentosSugeridos = new ArrayList<Alimento>();
     String TituloRefeicao = "";
+    String nomeAlimento;
     int Dia = 0;
+    private AgendaRepositorio bancoAgenda;
 
-    public FragmentAlterarSugestaoAlimento(List<Alimento> alimentosSugeridos, String tituloRefeicao, int dia) {
+    public FragmentAlterarSugestaoAlimento(List<Alimento> alimentosSugeridos, String tituloRefeicao, int dia, String nomeAlimento, AgendaRepositorio banco) {
         this.alimentosSugeridos = alimentosSugeridos;
         this.TituloRefeicao = tituloRefeicao;
+        this.nomeAlimento = nomeAlimento;
         this.Dia = dia;
+        bancoAgenda = banco;
 
         for (int c = 0; c<this.alimentosSugeridos.size(); c++){
             if (this.alimentosSugeridos.get(c).ListaSugestoes == null){
@@ -45,7 +50,7 @@ public class FragmentAlterarSugestaoAlimento extends Fragment {
 
         listRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        adpterItensSugeridos = new FragmentAlterarSugestaoAlimento_ItemAdapter(this.alimentosSugeridos, this.TituloRefeicao, this.Dia);
+        adpterItensSugeridos = new FragmentAlterarSugestaoAlimento_ItemAdapter(this.alimentosSugeridos, this.TituloRefeicao, this.Dia, this.nomeAlimento, this.bancoAgenda);
         listRecycler.setAdapter(adpterItensSugeridos);
 
         return infFragment;

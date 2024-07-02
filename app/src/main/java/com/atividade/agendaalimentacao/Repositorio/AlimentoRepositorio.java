@@ -141,12 +141,12 @@ public class AlimentoRepositorio extends SQLiteOpenHelper{
             this.InserirAlimento("Frango", "239", "Carne");
             this.InserirAlimento("Porco", "239", "Carne");
             this.InserirAlimento("Massa", "131", "Carboidrato");
-            this.InserirAlimento("Alimento1", "261", "Proteína");
-            this.InserirAlimento("Alimento2", "110", "Proteína");
-            this.InserirAlimento("Alimento3", "90", "Carboidrato");
-            this.InserirAlimento("Alimento4", "105", "Carboidrato");
+            this.InserirAlimento("Ovo", "155", "Proteína");
+            this.InserirAlimento("Cereais", "378", "Proteína");
+            this.InserirAlimento("Fruta", "50", "Carboidrato");
+            this.InserirAlimento("Legumes", "65", "Carboidrato");
             this.InserirAlimento("Café", "0", "Grão");
-            this.InserirAlimento("Leite", "0", "");
+            this.InserirAlimento("Leite", "0", "Carboidrato");
             this.InserirAlimento("Pão", "265", "Carboidrato");
         }
 

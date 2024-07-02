@@ -108,13 +108,7 @@ public class MainActivity_RefeicaoAdapter extends BaseExpandableListAdapter {
         butSugestaoSubstituicao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Alimento alimentoModel1 = new Alimento("Teste", "100kcal", "1");
-                Alimento alimentoModel2 = new Alimento("Teste2", "200kcal", "2");
-                List<Alimento> listaSugestoes = new ArrayList<Alimento>(Arrays.asList(
-                        alimentoModel1, alimentoModel2
-                ));
-                alimentoModel.ListaSugestoes = listaSugestoes;
-                ((MainActivity)mContext).AbrirSugestaoAlimentos(alimentoModel.ListaSugestoes, tituloRefeicao, Dia);
+                ((MainActivity)mContext).AbrirSugestaoAlimentos(alimentoModel.ListaSugestoes, tituloRefeicao, Dia, alimentoModel.Nome);
             }
         });
 

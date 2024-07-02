@@ -136,7 +136,9 @@ public class AgendaRepositorio extends SQLiteOpenHelper {
             do {
                 @SuppressLint("Range") String nome = cursor.getString(cursor.getColumnIndex("NomeAlimento"));
 
-                alimentos.add(new Alimento(nome, "", ""));
+                Alimento alimento = new Alimento(nome, "", "");
+                alimento.ListaSugestoes = RetornarSugestoes(alimento, db);
+                alimentos.add(alimento);
 
             } while (cursor.moveToNext());
         }
@@ -144,6 +146,66 @@ public class AgendaRepositorio extends SQLiteOpenHelper {
         cursor.close();
 
         return alimentos;
+    }
+
+    public Alimento RetornarAlimentoCompleto(Alimento alimento, SQLiteDatabase db){
+
+        String query = String.format("SELECT * FROM Alimento WHERE Nome = ?;");
+        Cursor cursor = db.rawQuery(query, new String[]{alimento.Nome});
+
+        if (cursor.moveToFirst()){
+            do {
+                @SuppressLint("Range") String calorias = cursor.getString(cursor.getColumnIndex("Calorias"));
+                @SuppressLint("Range") String tipo = cursor.getString(cursor.getColumnIndex("Tipo"));
+
+                alimento.Calorias = calorias;
+                alimento.Tipo = tipo;
+            } while (cursor.moveToNext());
+        }
+
+        return alimento;
+    }
+
+    public ArrayList<Alimento> RetornarSugestoes(Alimento alimento, SQLiteDatabase db){
+        ArrayList<Alimento> alimentosSugeridos = new ArrayList<Alimento>();
+
+        alimento = RetornarAlimentoCompleto(alimento, db);
+
+        String query = String.format("SELECT * FROM Alimento WHERE Nome <> ? AND (Tipo = ? OR Calorias = ?);");
+        Cursor cursor = db.rawQuery(query, new String[]{alimento.Nome, alimento.Tipo, alimento.Calorias});
+
+        if (cursor.moveToFirst()){
+            do {
+                @SuppressLint("Range") String nome = cursor.getString(cursor.getColumnIndex("Nome"));
+                @SuppressLint("Range") String calorias = cursor.getString(cursor.getColumnIndex("Calorias"));
+                @SuppressLint("Range") String tipo = cursor.getString(cursor.getColumnIndex("Tipo"));
+
+                Alimento alimentoSugerido = new Alimento(nome, calorias, tipo);
+                alimentosSugeridos.add(alimentoSugerido);
+
+            } while (cursor.moveToNext());
+        }
+
+        return alimentosSugeridos;
+    }
+
+    public void InserirAlimentoSugerido(int dia, String refeicao, String nomeAlimento){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("RefeicaoDia", dia);
+        values.put("Refeicao", refeicao);
+        values.put("NomeAlimento", nomeAlimento);
+
+        db.insert("AlimentoRefeicao", null, values);
+
+        db.close();
+    }
+
+    public void DesvincularAlimentoRemovidoSugestao(int dia, String refeicao, String nomeAlimento){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("AlimentoRefeicao", "RefeicaoDia = ? AND Refeicao = ? AND NomeAlimento = ?", new String[]{String.valueOf(dia), String.valueOf(refeicao), nomeAlimento});
+        db.close();
     }
 
     public void CriarPrimeirosRegistros(){

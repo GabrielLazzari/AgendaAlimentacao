@@ -198,8 +198,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(relatorios);
     }
 
-    public void AbrirSugestaoAlimentos(List<Alimento> alimentosSugeridos, String tituloRefeicao, int dia){
-        FragmentAlterarSugestaoAlimento fragmentAlterarSugestaoAlimento = new FragmentAlterarSugestaoAlimento(alimentosSugeridos, tituloRefeicao, dia);
+    public void AbrirSugestaoAlimentos(List<Alimento> alimentosSugeridos, String tituloRefeicao, int dia, String nomeAlimentoSelecionado){
+        FragmentAlterarSugestaoAlimento fragmentAlterarSugestaoAlimento = new FragmentAlterarSugestaoAlimento(alimentosSugeridos, tituloRefeicao, dia, nomeAlimentoSelecionado, this.bancoAgenda);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentSugestao, fragmentAlterarSugestaoAlimento);
         transaction.addToBackStack(null);
